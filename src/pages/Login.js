@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import SettingsButton from '../Components/SettingsButton';
 import fetchApi from '../Api';
 
 class Login extends React.Component {
@@ -15,6 +16,13 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     }, () => this.isButtonDisabled());
+  };
+
+  handleClick = async () => {
+    const { history } = this.props;
+    const userToken = await fetchApi();
+    localStorage.setItem('token', userToken);
+    history.push('/game');
   };
 
   isButtonDisabled = () => {
@@ -60,10 +68,11 @@ class Login extends React.Component {
           disabled={disabled}
           type="button"
           data-testid="btn-play"
-          onClick={this.handleClick}
+          onClick={ this.handleClick }
         >
           Play
         </button>
+        <SettingsButton />
       </div>
     );
   }
