@@ -15,5 +15,6 @@ root.render(
         <Route exact path="/" component={ App } />
       </Switch>
     </Provider>
+    <App />
   </BrowserRouter>,
 );
