@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import SettingsButton from '../Components/SettingsButton';
 import fetchApi from '../Api';
 
 class Login extends React.Component {
@@ -17,6 +18,13 @@ class Login extends React.Component {
     }, () => this.isButtonDisabled());
   };
 
+  handleClick = async () => {
+    const { history } = this.props;
+    const userToken = await fetchApi();
+    localStorage.setItem('token', userToken);
+    history.push('/game');
+  };
+
   isButtonDisabled = () => {
     const { state } = this;
     const nameLength = 1;
@@ -29,20 +37,13 @@ class Login extends React.Component {
     }
   };
 
-  handleClick = async () => {
-    const { history } = this.props;
-    const userToken = await fetchApi();
-    localStorage.setItem('token', userToken);
-    history.push('/game');
-  };
-
   render() {
     const { disabled } = this.state;
     return (
       <div>
         <label htmlFor="name-input">
           <input
-            onChange={this.handleChange}
+            onChange={ this.handleChange }
             name="name"
             data-testid="input-player-name"
             id="name-input"
@@ -51,19 +52,20 @@ class Login extends React.Component {
         <label htmlFor="email-input">
           <input
             name="email"
-            onChange={this.handleChange}
+            onChange={ this.handleChange }
             data-testid="input-gravatar-email"
             id="email-input"
           />
         </label>
         <button
-          disabled={disabled}
+          disabled={ disabled }
           type="button"
           data-testid="btn-play"
-          onClick={this.handleClick}
+          onClick={ this.handleClick }
         >
           Play
         </button>
+        <SettingsButton />
       </div>
     );
   }
