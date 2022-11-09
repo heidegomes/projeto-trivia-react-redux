@@ -27,7 +27,7 @@ test('Teste se a página contém um button de Entrar', () => {
 test('Teste se a aplicação é redirecionada para a tela do jogo, ao clicar no botão `Play`', () => {
   const { history } = renderWithRouterAndRedux(<App />, { initialState: { user: { email: '' } } });
   const inputNome = screen.getByTestId('input-player-name');
-  const inputEmail = screen.getByTestId('input-player-name');
+  const inputEmail = screen.getByTestId('input-gravatar-email');
   const button = screen.getByRole('button', { name: 'Play' });
   userEvent.type(inputEmail, email);
   userEvent.type(inputNome, 'Maria');
