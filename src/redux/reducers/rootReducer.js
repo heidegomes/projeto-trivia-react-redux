@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import user from './Useremail';
+import player from './Useremail';
 import gamer from './GameReducer';
 
 const INITIAL_STATE = {};
@@ -11,6 +11,6 @@ const exampleReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const rootReducer = combineReducers({ exampleReducer, user, gamer });
+const rootReducer = combineReducers({ exampleReducer, player, gamer });
 
 export default rootReducer;

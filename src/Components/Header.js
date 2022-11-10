@@ -6,7 +6,7 @@ import '../Style/Header.css';
 
 class Header extends React.Component {
   render() {
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
     const hash = md5(email).toString();
     return (
       <div>
@@ -16,7 +16,9 @@ class Header extends React.Component {
             { name.charAt(0).toUpperCase()
           + name.slice(1) }
           </p>
-          <p data-testid="header-score"> Score: 0</p>
+          <p data-testid="header-score">
+            { score }
+          </p>
         </div>
       </div>
     );
@@ -24,11 +26,13 @@ class Header extends React.Component {
 }
 Header.propTypes = {
   name: PropTypes.string,
-  email: PropTypes.string };
-Header.defaultProps = { email: '', name: '' };
+  email: PropTypes.string,
+  score: PropTypes.number };
+Header.defaultProps = { email: '', name: '', score: '' };
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
-  name: state.user.name,
+  email: state.player.gravatarEmail,
+  name: state.player.name,
+  score: state.player.score,
 });
 export default connect(mapStateToProps)(Header);

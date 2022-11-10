@@ -1,14 +1,15 @@
 const initialState = {
-  email: '',
   name: '',
+  assertions: 0,
   score: 0,
+  gravatarEmail: '',
 };
-const user = (state = initialState, action) => {
+const player = (state = initialState, action) => {
   switch (action.type) {
   case 'action.user':
-    return { ...state, email: action.payload.email, name: action.payload.name };
+    return { ...state, gravatarEmail: action.payload.email, name: action.payload.name };
   default:
     return state;
   }
 };
-export default user;
+export default player;
