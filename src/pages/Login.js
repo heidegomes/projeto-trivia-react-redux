@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SettingsButton from '../Components/SettingsButton';
-import fetchApi from '../Api';
-import userAction from '../redux/actions/actions';
+import fetchTokenApi from '../Requisiçoẽs/RequestToken';
+import { userAction } from '../redux/actions/actions';
+import logo from '../trivia.png';
 
 class Login extends React.Component {
   state = {
@@ -22,11 +23,11 @@ class Login extends React.Component {
 
   handleClick = async () => {
     const { history } = this.props;
-    const userToken = await fetchApi();
-    localStorage.setItem('token', userToken);
-    history.push('/game');
+    const userToken = await fetchTokenApi();
+    localStorage.setItem('token', userToken.token);
     const { dispatch } = this.props;
     dispatch(userAction(this.state));
+    history.push('/game');
   };
 
   isButtonDisabled = () => {
@@ -44,32 +45,38 @@ class Login extends React.Component {
   render() {
     const { disabled } = this.state;
     return (
-      <div>
-        <label htmlFor="name-input">
-          <input
-            onChange={ this.handleChange }
-            name="name"
-            data-testid="input-player-name"
-            id="name-input"
-          />
-        </label>
-        <label htmlFor="email-input">
-          <input
-            name="email"
-            onChange={ this.handleChange }
-            data-testid="input-gravatar-email"
-            id="email-input"
-          />
-        </label>
-        <button
-          disabled={ disabled }
-          type="button"
-          data-testid="btn-play"
-          onClick={ this.handleClick }
-        >
-          Play
-        </button>
-        <SettingsButton />
+      <div className="App">
+        <header className="App-header">
+          <img src={ logo } className="App-logo" alt="logo" />
+          <p>SUA VEZ</p>
+          <div>
+            <label htmlFor="name-input">
+              <input
+                onChange={ this.handleChange }
+                name="name"
+                data-testid="input-player-name"
+                id="name-input"
+              />
+            </label>
+            <label htmlFor="email-input">
+              <input
+                name="email"
+                onChange={ this.handleChange }
+                data-testid="input-gravatar-email"
+                id="email-input"
+              />
+            </label>
+            <button
+              disabled={ disabled }
+              type="button"
+              data-testid="btn-play"
+              onClick={ this.handleClick }
+            >
+              Play
+            </button>
+            <SettingsButton />
+          </div>
+        </header>
       </div>
     );
   }
