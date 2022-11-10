@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import SettingsButton from '../Components/SettingsButton';
 import fetchApi from '../Api';
+import userAction from '../redux/actions/actions';
 
 class Login extends React.Component {
   state = {
@@ -23,6 +25,8 @@ class Login extends React.Component {
     const userToken = await fetchApi();
     localStorage.setItem('token', userToken);
     history.push('/game');
+    const { dispatch } = this.props;
+    dispatch(userAction(this.state));
   };
 
   isButtonDisabled = () => {
@@ -73,12 +77,14 @@ class Login extends React.Component {
 
 Login.defaultProps = {
   history: () => { },
+  dispatch: () => {},
 };
 
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+  dispatch: PropTypes.func,
 };
 
-export default Login;
+export default connect()(Login);
