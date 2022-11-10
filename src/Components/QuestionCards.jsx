@@ -14,7 +14,6 @@ class QuestionCards extends Component {
     const { Results } = this.props;
     const { Page } = this.state;
     const arrays = Results[Page].incorrect_answers;
-    console.log(Results);
     arrays.push(Results[Page].correct_answer);
     this.setState({
       loading: false,
@@ -47,8 +46,6 @@ class QuestionCards extends Component {
       <div>
         { loading ? <Load /> : (
           <>
-            {/* { console.log(Question) } */}
-            { console.log(options) }
             <div data-testid="question-category">
               {`Categoria: ${Results[Page].category}`}
             </div>
@@ -68,7 +65,7 @@ class QuestionCards extends Component {
                       : `wrong-answer-${Results[Page]
                         .incorrect_answers.indexOf(option)}` }
                   >
-                    {option}
+                    {/* {option} */}
                   </button>
                 ))
               }

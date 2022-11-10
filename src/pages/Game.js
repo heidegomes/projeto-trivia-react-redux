@@ -14,18 +14,19 @@ class Game extends React.Component {
 
   async componentDidMount() {
     const { history } = this.props;
-    const fail = 3;
+    // const fail = 3;
     const token = localStorage.getItem('token');
-    const requestQuestion = await requestQuestions('10', token);
-    if (requestQuestion.response_code === fail) {
+    const requestQuestion = await requestQuestions(token);
+    if (requestQuestion.results.length === 0) {
       localStorage.clear();
       history.push('/');
+    } else {
+      const Results = requestQuestion.results;
+      this.setState({
+        Results,
+        canUptade: true,
+      });
     }
-    const Results = requestQuestion.results;
-    this.setState({
-      Results,
-      canUptade: true,
-    });
   }
 
   render() {
