@@ -77,13 +77,14 @@ class Login extends React.Component {
 
 Login.defaultProps = {
   history: () => { },
+  dispatch: () => {},
 };
 
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+  dispatch: PropTypes.func,
 };
-Login.propTypes = { dispatch: PropTypes.func };
-Login.defaultProps = { dispatch: () => {} };
+
 export default connect()(Login);
