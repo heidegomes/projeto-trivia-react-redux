@@ -2,12 +2,16 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Load from './Load';
+import Timer from './Timer';
+
+const THIRTY_SECONDS = 30000;
 
 class QuestionCards extends Component {
   state = ({
     loading: true,
     Answers: '',
     Page: 0,
+    disabled: false,
   });
 
   componentDidMount() {
@@ -19,6 +23,12 @@ class QuestionCards extends Component {
       loading: false,
       Answers: arrays,
     });
+    setTimeout(() => {
+      this.setState((prevState) => ({
+        ...prevState,
+        disabled: true,
+      }));
+    }, THIRTY_SECONDS);
   }
 
   randomAnswers = (answers) => {
@@ -39,7 +49,7 @@ class QuestionCards extends Component {
   };
 
   render() {
-    const { loading, Answers, Page } = this.state;
+    const { loading, Answers, Page, disabled } = this.state;
     const { Results } = this.props;
     console.log('Answers', Answers);
     const options = this.randomAnswers(Answers);
@@ -48,6 +58,7 @@ class QuestionCards extends Component {
       <div>
         { loading ? <Load /> : (
           <>
+            <Timer />
             <div data-testid="question-category">
               {`Categoria: ${Results[Page].category}`}
             </div>
@@ -62,6 +73,7 @@ class QuestionCards extends Component {
                     onClick={ this.handleAnswers }
                     key={ i }
                     id={ option }
+                    disabled={ disabled }
                     data-testid={ option === Results[Page].correct_answer
                       ? 'correct-answer'
                       : `wrong-answer-${Results[Page]
