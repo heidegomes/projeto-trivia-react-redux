@@ -41,7 +41,9 @@ class QuestionCards extends Component {
   render() {
     const { loading, Answers, Page } = this.state;
     const { Results } = this.props;
+    console.log('Answers', Answers);
     const options = this.randomAnswers(Answers);
+    console.log('Opções', options);
     return (
       <div>
         { loading ? <Load /> : (
@@ -50,22 +52,22 @@ class QuestionCards extends Component {
               {`Categoria: ${Results[Page].category}`}
             </div>
             <div data-testid="question-text">
-              {`Categoria: ${Results[Page].question}`}
+              {`Pergunta: ${Results[Page].question}`}
             </div>
             <div data-testid="answer-options">
               {
-                options.map((option) => (
+                options.map((option, i) => (
                   <button
                     type="button"
                     onClick={ this.handleAnswers }
-                    key={ option }
+                    key={ i }
                     id={ option }
                     data-testid={ option === Results[Page].correct_answer
                       ? 'correct-answer'
                       : `wrong-answer-${Results[Page]
                         .incorrect_answers.indexOf(option)}` }
                   >
-                    {/* {option} */}
+                    {option}
                   </button>
                 ))
               }

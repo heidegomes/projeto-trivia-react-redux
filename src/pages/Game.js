@@ -5,6 +5,7 @@ import Header from '../Components/Header';
 import Load from '../Components/Load';
 import QuestionCards from '../Components/QuestionCards';
 import requestQuestions from '../Requisiçoẽs/RequestQuestions';
+import './Game.css';
 
 class Game extends React.Component {
   state = {
@@ -31,6 +32,7 @@ class Game extends React.Component {
 
   render() {
     const { Results, canUptade } = this.state;
+    console.log(Results);
     return (
       <div>
         { !canUptade ? <Load /> : (
