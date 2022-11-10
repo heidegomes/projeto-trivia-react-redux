@@ -1,3 +1,5 @@
+export const SET_QUESTION = 'SET_QUESTION';
+
 export const userAction = (dados) => ({
   type: 'action.user',
   payload: dados,
