@@ -14,7 +14,7 @@ const player = (state = initialState, action) => {
     return {
       ...state,
       assertions: state.assertions + 1,
-      score: action.payload,
+      score: state.score + action.payload,
     };
   default:
     return state;

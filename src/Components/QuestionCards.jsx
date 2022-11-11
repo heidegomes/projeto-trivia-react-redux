@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { saveAssertions } from '../redux/actions/actions';
 import Load from './Load';
@@ -7,6 +8,7 @@ import Timer from './Timer';
 import '../Style/QuestionCard.css';
 
 const THIRTY_SECONDS = 30000;
+const FOUR = 4;
 
 class QuestionCards extends Component {
   state = ({
@@ -86,16 +88,22 @@ class QuestionCards extends Component {
     if (id === Results[Page].correct_answer) {
       const timer = event.target.parentNode.previousSibling.innerHTML;
       const score = ten + (Number(timer) * valueDifficulty);
+      console.log('batata');
       dispatch(saveAssertions(score));
     }
   };
 
   handleClick = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      showButton: false,
-      Page: prevState.Page + 1,
-    }));
+    const { Page } = this.state;
+    const { history } = this.props;
+    if (Page === FOUR) history.push('/feedback');
+    else {
+      this.setState((prevState) => ({
+        ...prevState,
+        showButton: false,
+        Page: prevState.Page + 1,
+      }), () => this.componentDidMount());
+    }
   };
 
   render() {
@@ -109,10 +117,10 @@ class QuestionCards extends Component {
         { loading ? <Load /> : (
           <>
             <div data-testid="question-category">
-              {`Categoria: ${Results[Page].category}`}
+              {`${Results[Page].category}`}
             </div>
             <div data-testid="question-text">
-              {`Pergunta: ${Results[Page].question}`}
+              {`${Results[Page].question}`}
             </div>
             <Timer />
             <div data-testid="answer-options">
@@ -164,4 +172,4 @@ const mapStateToProps = (state) => ({
   Results: state.gamer.questions,
 });
 
-export default connect(mapStateToProps)(QuestionCards);
+export default connect(mapStateToProps)(withRouter(QuestionCards));

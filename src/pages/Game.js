@@ -7,6 +7,7 @@ import QuestionCards from '../Components/QuestionCards';
 import requestQuestions from '../Requisiçoẽs/RequestQuestions';
 import './Game.css';
 import setResults from '../redux/actions/actions';
+import RankingButton from '../Components/RankingButton';
 
 class Game extends React.Component {
   constructor() {
@@ -39,6 +40,7 @@ class Game extends React.Component {
     const { canUptade } = this.state;
     return (
       <div>
+        <RankingButton />
         { !canUptade ? <Load /> : (
           <>
             <Header />

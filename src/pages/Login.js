@@ -5,6 +5,7 @@ import SettingsButton from '../Components/SettingsButton';
 import fetchTokenApi from '../Requisiçoẽs/RequestToken';
 import { userAction } from '../redux/actions/actions';
 import logo from '../trivia.png';
+import RankingButton from '../Components/RankingButton';
 
 class Login extends React.Component {
   state = {
@@ -47,6 +48,7 @@ class Login extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
+          <RankingButton />
           <img src={ logo } className="App-logo" alt="logo" />
           <p>SUA VEZ</p>
           <div>
