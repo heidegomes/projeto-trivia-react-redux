@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class RankingButton extends Component {
   handleClick = () => {
@@ -20,9 +21,13 @@ class RankingButton extends Component {
     );
   }
 }
+RankingButton.defaultProps = {
+  history: () => { },
+};
+
 RankingButton.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
-  }).isRequired,
+  }),
 };
-export default withRouter(RankingButton);
+export default connect()(withRouter(RankingButton));

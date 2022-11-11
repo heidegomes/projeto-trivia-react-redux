@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { saveAssertions } from '../redux/actions/actions';
+import { saveAssertions, saveRankingPlayer } from '../redux/actions/actions';
 import Load from './Load';
 import Timer from './Timer';
 import '../Style/QuestionCard.css';
@@ -88,16 +88,17 @@ class QuestionCards extends Component {
     if (id === Results[Page].correct_answer) {
       const timer = event.target.parentNode.previousSibling.innerHTML;
       const score = ten + (Number(timer) * valueDifficulty);
-      console.log('batata');
       dispatch(saveAssertions(score));
     }
   };
 
   handleClick = () => {
     const { Page } = this.state;
-    const { history } = this.props;
-    if (Page === FOUR) history.push('/feedback');
-    else {
+    const { history, dispatch } = this.props;
+    if (Page === FOUR) {
+      dispatch(saveRankingPlayer());
+      history.push('/feedback');
+    } else {
       this.setState((prevState) => ({
         ...prevState,
         showButton: false,
