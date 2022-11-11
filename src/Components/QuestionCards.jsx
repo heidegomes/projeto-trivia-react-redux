@@ -14,6 +14,7 @@ class QuestionCards extends Component {
     Page: 0,
     disabled: false,
     assertions: 0,
+    showButton: false,
   });
 
   componentDidMount() {
@@ -46,12 +47,16 @@ class QuestionCards extends Component {
   };
 
   handleAnswers = (event) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      showButton: true,
+    }));
+
     const { id } = event.target;
     const { dispatch, Results } = this.props;
-    console.log(Results);
+    // console.log(Results[1]);
     const { Page } = this.state;
     const dificulty = Results[Page].difficulty;
-    console.log(dificulty);
     let valueDifficulty = 0;
     const tree = 3;
     const two = 2;
@@ -77,14 +82,20 @@ class QuestionCards extends Component {
     }
   };
 
-  // hard: 3, medium: 2, easy: 1
+  handleClick = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      showButton: false,
+      Page: prevState + 1,
+    }));
+  };
 
   render() {
-    const { loading, Answers, Page, disabled } = this.state;
+    const { loading, Answers, Page, disabled, showButton } = this.state;
     const { Results } = this.props;
-    console.log('Answers', Answers);
+    // console.log('Answers', Answers);
     const options = this.randomAnswers(Answers);
-    console.log('Opções', options);
+    // console.log('Opções', options);
     return (
       <div>
         { loading ? <Load /> : (
@@ -117,6 +128,16 @@ class QuestionCards extends Component {
             </div>
           </>
         ) }
+        { showButton
+          && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ this.handleClick }
+            >
+              Next
+            </button>
+          )}
       </div>
     );
   }
