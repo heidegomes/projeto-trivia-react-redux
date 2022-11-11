@@ -21,11 +21,15 @@ class QuestionCards extends Component {
     const { Results } = this.props;
     console.log(Results);
     const { Page } = this.state;
-    const arrays = Results[Page].incorrect_answers;
-    arrays.push(Results[Page].correct_answer);
+    const arrayConjunto = Results[Page].incorrect_answers;
+    arrayConjunto.push(Results[Page].correct_answer);
+    const ObjetoSemRepeticao = new Set(arrayConjunto);
+    const ArrayDoObjeto = Array.from(ObjetoSemRepeticao);
+    console.log('NovoArray', ArrayDoObjeto);
+    // var novaArr = arr.filter((este, i) => arr.indexOf(este) === i);
     this.setState({
       loading: false,
-      Answers: arrays,
+      Answers: ArrayDoObjeto,
     });
     setTimeout(() => {
       this.setState((prevState) => ({
@@ -37,6 +41,7 @@ class QuestionCards extends Component {
 
   randomAnswers = (answers) => {
     const newAnswersArr = answers;
+    console.log(newAnswersArr);
     for (let i = answers.length - 1; i > 0; i -= 1) {
       const randomIndex = Math.floor(Math.random() * (i + 1));
       [
@@ -44,6 +49,7 @@ class QuestionCards extends Component {
         newAnswersArr[randomIndex],
       ] = [newAnswersArr[randomIndex], newAnswersArr[i]];
     }
+    console.log(newAnswersArr);
     return newAnswersArr;
   };
 
@@ -96,7 +102,7 @@ class QuestionCards extends Component {
     const { Results } = this.props;
     // console.log('Answers', Answers);
     const options = this.randomAnswers(Answers);
-    // console.log('Opções', options);
+    console.log('Opções', options);
     return (
       <div>
         { loading ? <Load /> : (
