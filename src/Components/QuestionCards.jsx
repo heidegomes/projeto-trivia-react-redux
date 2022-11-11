@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { saveAssertions } from '../redux/actions/actions';
 import Load from './Load';
 import Timer from './Timer';
 
@@ -12,6 +13,7 @@ class QuestionCards extends Component {
     Answers: '',
     Page: 0,
     disabled: false,
+    assertions: 0,
   });
 
   componentDidMount() {
@@ -45,8 +47,37 @@ class QuestionCards extends Component {
 
   handleAnswers = (event) => {
     const { id } = event.target;
-    console.log(id);
+    const { dispatch, Results } = this.props;
+    console.log(Results);
+    const { Page } = this.state;
+    const dificulty = Results[Page].difficulty;
+    console.log(dificulty);
+    let valueDifficulty = 0;
+    const tree = 3;
+    const two = 2;
+    const one = 1;
+    const ten = 10;
+    switch (dificulty) {
+    case 'hard':
+      valueDifficulty = tree;
+      break;
+    case 'medium':
+      valueDifficulty = two;
+      break;
+    case 'easy':
+      valueDifficulty = one;
+      break;
+    default:
+      break;
+    }
+    if (id === Results[Page].correct_answer) {
+      const timer = event.target.parentNode.previousSibling.innerHTML;
+      const score = ten + (Number(timer) * valueDifficulty);
+      dispatch(saveAssertions(score));
+    }
   };
+
+  // hard: 3, medium: 2, easy: 1
 
   render() {
     const { loading, Answers, Page, disabled } = this.state;
@@ -58,13 +89,13 @@ class QuestionCards extends Component {
       <div>
         { loading ? <Load /> : (
           <>
-            <Timer />
             <div data-testid="question-category">
               {`Categoria: ${Results[Page].category}`}
             </div>
             <div data-testid="question-text">
               {`Pergunta: ${Results[Page].question}`}
             </div>
+            <Timer />
             <div data-testid="answer-options">
               {
                 options.map((option, i) => (
