@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { saveAssertions } from '../redux/actions/actions';
 import Load from './Load';
 import Timer from './Timer';
+import '../Style/QuestionCard.css';
 
 const THIRTY_SECONDS = 30000;
 
@@ -127,6 +128,9 @@ class QuestionCards extends Component {
                       ? 'correct-answer'
                       : `wrong-answer-${Results[Page]
                         .incorrect_answers.indexOf(option)}` }
+                    className={ option === Results[Page].correct_answer
+                      ? `${showButton}Correct`
+                      : `${showButton}Incorrect` }
                   >
                     {option}
                   </button>
