@@ -11,8 +11,9 @@ export const saveAssertions = (dados) => ({
   payload: dados,
 });
 
-// Essa action abaixo não esta sendo usada
-export const setQuestions = (payload) => ({
-  type: SET_QUESTION,
-  payload,
+const setResults = (dados) => ({
+  type: 'SET_QUESTION',
+  payload: dados,
 });
+
+export default setResults;

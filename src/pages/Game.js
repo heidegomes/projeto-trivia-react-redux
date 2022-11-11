@@ -6,15 +6,18 @@ import Load from '../Components/Load';
 import QuestionCards from '../Components/QuestionCards';
 import requestQuestions from '../Requisiçoẽs/RequestQuestions';
 import './Game.css';
+import setResults from '../redux/actions/actions';
 
 class Game extends React.Component {
-  state = {
-    Results: {},
-    canUptade: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      canUptade: false,
+    };
+  }
 
   async componentDidMount() {
-    const { history } = this.props;
+    const { history, dispatch, Questions } = this.props;
     // const fail = 3;
     const token = localStorage.getItem('token');
     const requestQuestion = await requestQuestions(token);
@@ -24,22 +27,23 @@ class Game extends React.Component {
     } else {
       const Results = requestQuestion.results;
       this.setState({
-        Results,
         canUptade: true,
       });
+      if (Questions.length === 0) {
+        dispatch(setResults(Results));
+      }
     }
   }
 
   render() {
-    const { Results, canUptade } = this.state;
-    console.log(Results);
+    const { canUptade } = this.state;
     return (
       <div>
         { !canUptade ? <Load /> : (
           <>
             <Header />
             <div>Game</div>
-            <QuestionCards Results={ Results } />
+            <QuestionCards />
           </>
         ) }
       </div>
@@ -52,4 +56,9 @@ Game.propTypes = {
     push: PropTypes.func,
   }),
 }.isRequired;
-export default connect()(Game);
+
+const mapStateToProps = (state) => ({
+  Questions: state.gamer.questions,
+});
+
+export default connect(mapStateToProps)(Game);

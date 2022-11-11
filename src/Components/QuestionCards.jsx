@@ -19,6 +19,7 @@ class QuestionCards extends Component {
 
   componentDidMount() {
     const { Results } = this.props;
+    console.log(Results);
     const { Page } = this.state;
     const arrays = Results[Page].incorrect_answers;
     arrays.push(Results[Page].correct_answer);
@@ -86,7 +87,7 @@ class QuestionCards extends Component {
     this.setState((prevState) => ({
       ...prevState,
       showButton: false,
-      Page: prevState + 1,
+      Page: prevState.Page + 1,
     }));
   };
 
@@ -150,7 +151,7 @@ QuestionCards.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  Question: state.gamer.question,
+  Results: state.gamer.questions,
 });
 
 export default connect(mapStateToProps)(QuestionCards);
