@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import RankingButton from '../Components/RankingButton';
 
@@ -17,9 +17,9 @@ class Feedback extends Component {
   };
 
   handleClick = () => {
-    const {history} = this.props;
+    const { history } = this.props;
     history.push('/');
-  }
+  };
 
   render() {
     const { score, assertions } = this.props;
@@ -33,7 +33,7 @@ class Feedback extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={this.handleClick}
+          onClick={ this.handleClick }
         >
           Play Again
         </button>
@@ -47,4 +47,16 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
   assertions: state.player.assertions,
 });
+Feedback.defaultProps = {
+  history: () => { },
+  score: 0,
+  assertions: 0,
+};
+Feedback.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  score: PropTypes.number,
+  assertions: PropTypes.number,
+};
 export default connect(mapStateToProps)(Feedback);

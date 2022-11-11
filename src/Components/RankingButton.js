@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class RankingButton extends Component {
   handleClick = () => {
@@ -19,4 +20,9 @@ class RankingButton extends Component {
     );
   }
 }
+RankingButton.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 export default withRouter(RankingButton);
