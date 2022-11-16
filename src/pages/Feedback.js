@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import Header from '../Components/Header';
 import RankingButton from '../Components/RankingButton';
 import { resetScore } from '../redux/actions/actions';
@@ -50,12 +51,12 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
   assertions: state.player.assertions,
 });
-Feedback.defaultProps = {
-  history: () => { },
-  dispatch: () => { },
-  score: 0,
-  assertions: 0,
-};
+// Feedback.defaultProps = {
+//   history: () => { },
+//   dispatch: () => { },
+//   score: 0,
+//   assertions: 0,
+// };
 Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -63,5 +64,5 @@ Feedback.propTypes = {
   dispatch: PropTypes.func,
   score: PropTypes.number,
   assertions: PropTypes.number,
-};
-export default connect(mapStateToProps)(Feedback);
+}.isRequired;
+export default connect(mapStateToProps)(withRouter(Feedback));

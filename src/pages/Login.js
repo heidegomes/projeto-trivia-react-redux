@@ -15,8 +15,7 @@ class Login extends React.Component {
   };
 
   handleChange = (e) => {
-    const { name, type, checked } = e.target;
-    const value = type === 'checkbox' ? checked : e.target.value;
+    const { name, value } = e.target;
     this.setState({
       [name]: value,
     }, () => this.isButtonDisabled());
@@ -84,16 +83,16 @@ class Login extends React.Component {
   }
 }
 
-Login.defaultProps = {
-  history: () => { },
-  dispatch: () => {},
-};
+// Login.defaultProps = {
+//   history: () => { },
+//   dispatch: () => {},
+// };
 
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
-  }),
-  dispatch: PropTypes.func,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect()(Login);

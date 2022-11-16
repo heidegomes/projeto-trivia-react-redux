@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
@@ -24,7 +24,7 @@ test('Teste se a página contém um button de Entrar', () => {
   expect(button).toBeInTheDocument();
 });
 
-test('Teste se a aplicação é redirecionada para a tela do jogo, ao clicar no botão `Play`', () => {
+test('Teste se a aplicação é redirecionada para a tela do jogo, ao clicar no botão `Play`', async () => {
   const { history } = renderWithRouterAndRedux(<App />, { initialState: { user: { email: '' } } });
   const inputNome = screen.getByTestId('input-player-name');
   const inputEmail = screen.getByTestId('input-gravatar-email');
@@ -32,8 +32,10 @@ test('Teste se a aplicação é redirecionada para a tela do jogo, ao clicar no 
   userEvent.type(inputEmail, email);
   userEvent.type(inputNome, 'Maria');
   userEvent.click(button);
-  const { pathname } = history.location;
-  expect(pathname).toBe('/game');
+  await waitFor(() => {
+    const { pathname } = history.location;
+    expect(pathname).toBe('/game');
+  });
 });
 
 test('Será validado se o botão está habilitado somente se o input input nome estiver preenchido e o input de email tem um formato valido', () => {
