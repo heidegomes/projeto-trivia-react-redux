@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import '../Style/Header.css';
 import { TiHome } from 'react-icons/ti';
 import { withRouter } from 'react-router-dom';
+import { resetScore } from '../redux/actions/actions';
 
 class Header extends React.Component {
   handleHome = async () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    dispatch(resetScore());
     history.push('/');
   };
 
@@ -19,7 +21,7 @@ class Header extends React.Component {
       <div>
         <div className="HeaderContent">
           <button type="button" onClick={ this.handleHome } data-testid="btn-go-home">
-            <TiHome />
+            <TiHome pointerEvents="none" />
           </button>
           <img data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${hash}` } alt="Profile" />
           <p data-testid="header-player-name">

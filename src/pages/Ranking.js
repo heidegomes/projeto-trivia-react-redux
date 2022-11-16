@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { TiHome } from 'react-icons/ti';
+import { connect } from 'react-redux';
 import PlayersCards from '../Components/PlayersCards';
+import { resetScore } from '../redux/actions/actions';
 
 class Rankings extends Component {
   handleHome = async () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    dispatch(resetScore());
     history.push('/');
   };
 
@@ -15,7 +18,7 @@ class Rankings extends Component {
         data-testid="ranking-title"
       >
         <button type="button" onClick={ this.handleHome } data-testid="btn-go-home">
-          <TiHome />
+          <TiHome pointerEvents="none" />
         </button>
         Rankings
         <PlayersCards />
@@ -32,4 +35,4 @@ Rankings.propTypes = {
   }),
   score: PropTypes.any,
 }.isRequired;
-export default Rankings;
+export default connect()(Rankings);

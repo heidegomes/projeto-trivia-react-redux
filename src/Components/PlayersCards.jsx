@@ -17,10 +17,10 @@ class PlayersCards extends Component {
     const hash = md5(playerRanking.email).toString();
 
     return (
-      <div>
+      <ol>
         {
           playerRanking.sort((x, y) => y.score - x.score).map((player, index) => (
-            <div key={ player.email } className="PlayerCard">
+            <li key={ player.email } className="PlayerCard">
               <img data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${hash}` } alt="Profile" />
               <p data-testid={ `player-name-${index}` }>
                 { player.name.charAt(0).toUpperCase()
@@ -29,10 +29,10 @@ class PlayersCards extends Component {
               <p data-testid={ `player-score-${index}` }>
                 { player.score }
               </p>
-            </div>
+            </li>
           ))
         }
-      </div>
+      </ol>
     );
   }
 }
